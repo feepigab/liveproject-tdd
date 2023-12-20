@@ -3,6 +3,7 @@ using Moq;
 using ShoppingCartService.BusinessLogic;
 using ShoppingCartService.DataAccess.Entities;
 using ShoppingCartService.Models;
+using ShoppingCartTests.Builders;
 
 namespace BusinessLogicTests
 {
@@ -24,18 +25,8 @@ namespace BusinessLogicTests
         [Theory]
         public void Checkout_Totals(double expectedDiscount, double expectedTotal, CustomerType customerType, uint itemQuantity)
         {
-            var cart = new Cart
-            {
-                Items = new List<Item>
-                {
-                    new Item
-                    {
-                        Price = 1.0,
-                        Quantity = itemQuantity
-                    }
-                },
-                CustomerType = customerType
-            };
+            var item = new ItemBuilder().WithPrice(1.0).WithQuantity(itemQuantity).Build();
+            var cart = new CartBuilder().WithItems(new List<Item> { item }).WithCustomerType(customerType).Build();
 
             var engine = new CheckOutEngine(_mockShippingCalculator.Object, _mockMapper.Object);
             _mockShippingCalculator.Setup(x => x.CalculateShippingCost(cart)).Returns(1.0);

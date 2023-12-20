@@ -1,6 +1,7 @@
 ﻿using ShoppingCartService.BusinessLogic;
 using ShoppingCartService.DataAccess.Entities;
 using ShoppingCartService.Models;
+using ShoppingCartTests.Builders;
 
 namespace BusinessLogicTests
 {
@@ -51,28 +52,9 @@ namespace BusinessLogicTests
         [Fact]
         public void Foreign_Office()
         {
-            var officeAddress = new Address
-            {
-                Country = "Canada",
-                City = "Toronto",
-                Street = "123 East Ave"
+            var officeAddress = new AddressBuilder().WithCountry("Canada").Build();
 
-            };
-            var cart = new Cart
-            {
-                CustomerType = CustomerType.Standard,
-                ShippingMethod = ShippingMethod.Standard,
-                ShippingAddress = new Address
-                {
-                    Country = "USA",
-                    City = "Dallas",
-                    Street = "123 Main Ave"
-                },
-                Items = new List<Item>
-                {
-                    new Item{Quantity=1}
-                }
-            };
+            var cart = GenerateCart(country: "USA");
 
             var shippingCalculator = new ShippingCalculator(officeAddress);
             var cost = shippingCalculator.CalculateShippingCost(cart);
@@ -86,18 +68,12 @@ namespace BusinessLogicTests
             CustomerType customerType = CustomerType.Standard,
             ShippingMethod shippingMethod = ShippingMethod.Standard)
         {
-            return new Cart
-            {
-                CustomerType = customerType,
-                ShippingMethod = shippingMethod,
-                ShippingAddress = new Address
-                {
-                    Country = country,
-                    City = city,
-                    Street = "123 street name"
-                },
-                Items = new List<Item> { new Item { Quantity = 1 } }
-            };
+            return new CartBuilder()
+                .WithCustomerType(customerType)
+                .WithShippingMethod(shippingMethod)
+                .WithShippingAddress(new AddressBuilder().WithCountry(country).WithCity(city).WithStreet("123 Street Name").Build())
+                .WithItems(new List<Item> { new ItemBuilder().WithQuantity(1).Build() })
+                .Build();
         }
     }
 }

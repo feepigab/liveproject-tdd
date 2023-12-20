@@ -1,6 +1,5 @@
-
 using ShoppingCartService.BusinessLogic.Validation;
-using ShoppingCartService.Models;
+using ShoppingCartTests.Builders;
 
 namespace BusinessLogicTests
 {
@@ -9,12 +8,8 @@ namespace BusinessLogicTests
         [Fact]
         public void Valid_address()
         {
-            var address = new Address
-            {
-                Country = "USA",
-                City = "Phoenix",
-                Street = "123 Main Ave"
-            };
+            var address = new AddressBuilder().WithCountry("Country").WithCity("City").WithStreet("123 Street Name").Build();
+
             var addressValidator = new AddressValidator();
 
             bool isValid = addressValidator.IsValid(address);
@@ -29,24 +24,12 @@ namespace BusinessLogicTests
         [Theory]
         public void Address_is_Invalid(string country, string city, string street)
         {
-            var address = GenerateAddress(country, city, street);
+            var address = new AddressBuilder().WithCountry(country).WithCity(city).WithStreet(street).Build();
 
             var validator = new AddressValidator();
             bool isValid = validator.IsValid(address);
 
             Assert.False(isValid);
-        }
-
-        private Address GenerateAddress(string country, string city, string street)
-        {
-            if (country == null || city == null || street == null) { return null; }
-
-            return new Address
-            {
-                Country = country,
-                City = city,
-                Street = street
-            };
         }
     }
 }
