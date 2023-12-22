@@ -1,7 +1,7 @@
 ﻿using ShoppingCartService.DataAccess.Entities;
 using ShoppingCartService.Models;
 
-namespace ShoppingCartTests.Builders
+namespace ShoppingCartServiceTests.Builders
 {
     public class CartBuilder
     {

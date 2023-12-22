@@ -1,6 +1,6 @@
 ﻿using ShoppingCartService.DataAccess.Entities;
 
-namespace ShoppingCartTests.Builders
+namespace ShoppingCartServiceTests.Builders
 {
     public class ItemBuilder
     {

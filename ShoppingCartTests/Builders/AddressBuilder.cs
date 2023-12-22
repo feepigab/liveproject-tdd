@@ -1,6 +1,6 @@
 ﻿using ShoppingCartService.Models;
 
-namespace ShoppingCartTests.Builders
+namespace ShoppingCartServiceTests.Builders
 {
     public class AddressBuilder
     {

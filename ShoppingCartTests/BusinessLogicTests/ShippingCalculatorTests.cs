@@ -1,9 +1,9 @@
 ﻿using ShoppingCartService.BusinessLogic;
 using ShoppingCartService.DataAccess.Entities;
 using ShoppingCartService.Models;
-using ShoppingCartTests.Builders;
+using ShoppingCartServiceTests.Builders;
 
-namespace ShoppingCartTests.BusinessLogicTests
+namespace ShoppingCartServiceTests.BusinessLogicTests
 {
     public class ShippingCalculatorTests
     {
