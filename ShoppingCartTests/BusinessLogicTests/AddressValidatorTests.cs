@@ -1,4 +1,5 @@
 using ShoppingCartService.BusinessLogic.Validation;
+using ShoppingCartServiceTests.Builders;
 
 namespace ShoppingCartServiceTests.BusinessLogicTests
 {
