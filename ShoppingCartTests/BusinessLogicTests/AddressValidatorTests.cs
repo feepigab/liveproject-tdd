@@ -1,7 +1,7 @@
 using ShoppingCartService.BusinessLogic.Validation;
 using ShoppingCartTests.Builders;
 
-namespace BusinessLogicTests
+namespace ShoppingCartTests.BusinessLogicTests
 {
     public class AddressValidatorTests
     {
