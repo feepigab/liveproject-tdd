@@ -5,6 +5,7 @@ namespace ShoppingCartServiceTests.Builders
 {
     public class CartBuilder
     {
+        private string _id;
         private CustomerType _customerType;
         private ShippingMethod _shippingMethod;
         private Address _shippingAddress;
@@ -14,6 +15,12 @@ namespace ShoppingCartServiceTests.Builders
         {
             _shippingAddress = new AddressBuilder().Build();
             _items = new List<Item>();
+        }
+
+        public CartBuilder WithId(string id)
+        {
+            _id = id;
+            return this;
         }
 
         public CartBuilder WithCustomerType(CustomerType customerType)
@@ -44,6 +51,7 @@ namespace ShoppingCartServiceTests.Builders
         {
             return new Cart
             {
+                Id = _id,
                 CustomerType = _customerType,
                 ShippingMethod = _shippingMethod,
                 ShippingAddress = _shippingAddress,
