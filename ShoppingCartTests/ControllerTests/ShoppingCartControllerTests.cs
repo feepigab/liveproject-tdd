@@ -113,7 +113,7 @@ namespace ShoppingCartServiceTests.ControllerTests
         }
 
         [Fact]
-        public void Create_Successful_Matching_Ids()
+        public void Create_Successful_All_Validators_Pass()
         {
             var id = ObjectId.GenerateNewId().ToString();
             var item = new ItemBuilder().WithQuantity(10).Build();
@@ -123,14 +123,13 @@ namespace ShoppingCartServiceTests.ControllerTests
                 Items = new List<ItemDto> { _mapper.Map<ItemDto>(item) }
             };
 
-            _addressValidatorMock.Setup(x => x.IsValid(cartDto.Customer.Address)).Returns(true);
-            // TODO: mock repo to return cart with id
-
             var shoppingCartController = new ShoppingCartController(_shoppingCartManager, _loggerMock.Object);
 
-            var result = shoppingCartController.Create(cartDto);
+            _addressValidatorMock.Setup(x => x.IsValid(cartDto.Customer.Address)).Returns(true);
 
-            Assert.Equal(id, result.Value.Id);
+            shoppingCartController.Create(cartDto);
+
+            _shoppingCartRepoMock.Verify(x => x.Create(_mapper.Map<Cart>(cartDto)), Times.Once());
         }
 
         [Fact]
@@ -153,6 +152,13 @@ namespace ShoppingCartServiceTests.ControllerTests
         [Fact]
         public void Delete_Successul()
         {
+            var id = ObjectId.GenerateNewId().ToString();
+
+            var shoppingCartController = new ShoppingCartController(_shoppingCartManager, _loggerMock.Object);
+
+            shoppingCartController.DeleteCart(id);
+
+            _shoppingCartRepoMock.Verify(x => x.Remove(id), Times.Once());
         }
     }
 }
